@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-echo “chirp - dk865’s Cheerful Homemade Package Manager - v1.0.0”
+echo “chirp - dk865’s Cheerful Homemade Package Installer/Updater - v1.0.0”
 echo “This script has Grilled-Cheese Making Capabilities”
 
 if [ ! -d ~/.dk865/chirp/chirp100 ]; then
@@ -19,25 +19,33 @@ sleep 1
 fi
 
 if [ ! -f ~/.dk865/chirp/chirp_depend1 ]; then
-echo “Checking for Missing Dependencies: Please enter your sudo password when prompted...”
-sudo apt install unzip curl -y
-echo “Successfully installed dependencies.”
-mkdir ~/.dk865
-echo “Successfully installed dependencies with Version 1.0.0” > ~/.dk865/chirp_depend1
-sleep 1
+  echo "Checking for Missing Dependencies: Please enter your sudo password when prompted..."
+  sudo apt-get install -qq unzip curl -y
+  echo "Successfully installed dependencies."
+  mkdir -p ~/.dk865/chirp
+  echo "Successfully installed dependencies with Version 1.0.0" > ~/.dk865/chirp/chirp_depend1
+  sleep 1
 fi
 
-echo “Updating $1...”
-curl https://github.com/dk865/cpkg/$1.cpkg -o package.cpkg
+echo "Updating $1..."
+curl -sL https://github.com/dk865/cpkg/$1.cpkg -o package.cpkg
 unzip -q package.cpkg
 cd package
-echo “Running install script for $1”
+echo "Running install script for $1"
 chmod +x ./setup.sh
 ./setup.sh
-echo “”
-echo “Install script completed.”
-echo “Cleaning up...”
+echo ""
+echo "Install script completed."
+echo "Cleaning up..."
 ./clean.sh
 cd ..
-rm -rf cpkg.zip cpkg
-echo “Have a GREAT DAY!”
+rm -rf package.cpkg package
+echo "Have a GREAT DAY!"
+
+echo "         .-."
+echo "        (. .)__,')"
+echo "        / V      )"
+echo "  ()    \  (   \/"
+echo "<)-'\()  `._`._ \\"
+echo "  <).>=====>><==`'===="
+echo "   C-''(>              "
